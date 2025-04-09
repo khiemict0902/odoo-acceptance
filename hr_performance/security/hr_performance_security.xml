@@ -1,0 +1,21 @@
+<odoo>
+    <!-- Nhóm: Nhân viên -->
+    <record id="group_hr_review_employee" model="res.groups">
+        <field name="name">Nhân viên</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>
+
+    <!-- Nhóm: Quản lý -->
+    <record id="group_hr_review_manager" model="res.groups">
+        <field name="name">Quản lý</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+        <field name="implied_ids" eval="[(4, ref('hr_performance.group_hr_review_employee'))]"/>
+    </record>
+
+    <!-- Nhóm: Quản trị viên -->
+    <record id="group_hr_review_admin" model="res.groups">
+        <field name="name">Quản trị viên</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+        <field name="implied_ids" eval="[(4, ref('hr_performance.group_hr_review_manager'))]"/>
+    </record>
+</odoo>
