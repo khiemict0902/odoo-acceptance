@@ -1,3 +1,5 @@
+from email.policy import default
+
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError, UserError
 
@@ -20,7 +22,7 @@ class HrPerformanceReview(models.Model):
         ('draft', 'Draft'),
         ('submitted', 'Submitted'),
         ('approved', 'Approved'),
-    ], 'Trạng thái', required=True, tracking=True)
+    ], 'Trạng thái', required=True, default='draft', tracking=True)
 
     employee_id = fields.Many2one('hr.employee', string='Nhân viên', required=True)
     reviewer_id = fields.Many2one('res.users', string='Người đánh giá')
