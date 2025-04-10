@@ -23,5 +23,5 @@ class InheritedEmployee(models.Model):
             score =round(score/count) if count else 0
             # print(round(score/count))
 
-            score_value = dict(record.review_ids[-1]._fields['performance_score'].selection).get(str(score))
+            score_value = dict(record.review_ids[-1]._fields['performance_score'].selection).get(str(score)) if score else 0
             record.average_score = score_value

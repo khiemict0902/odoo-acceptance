@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+<!--        <record id="launch_the_wizard" model="ir.actions.act_window">-->
+<!--            <field name="name">Launch the Wizard</field>-->
+<!--            <field name="res_model">update.experience.wizard</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="target">new</field>-->
+<!--            <field name="binding_model_id" ref="hr.model_hr_employee"/>-->
+<!--        </record>-->
+
+        <record id="view_employee_form" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="priority" eval="2000"/>
+            <field name="arch" type="xml">
+                <div position="inside">
+                    <button name="%(hr_exp.launch_the_wizard)d" type="action" class="oe_stat_button" icon="fa-user">
+                        Kinh nghiệm
+                    </button>
+                </div>
+                <notebook position="before">
+                    <group>
+                        <field name="years_of_experience"/>
+                    </group>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</odoo>
