@@ -1,9 +1,10 @@
 <odoo>
+    <data>
     <!-- Quy tắc cho Nhân viên -->
     <record id="rule_employee_own_draft" model="ir.rule">
         <field name="name">Nhân viên - Xem và chỉnh sửa bản nháp của chính mình</field>
         <field name="model_id" ref="model_hr_performance_review"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id), ('state', '=', 'draft')]</field>
+        <field name="domain_force">[('state', '=', 'draft')]</field>
         <field name="groups" eval="[(4, ref('hr_performance.group_hr_review_employee'))]"/>
         <field name="perm_read" eval="1"/>
         <field name="perm_write" eval="1"/>
@@ -11,11 +12,11 @@
         <field name="perm_unlink" eval="0"/>
     </record>
 
-    <!-- Quy tắc cho Nhân viên xem tất cả các bản ghi của mình -->
+<!--    &lt;!&ndash; Quy tắc cho Nhân viên xem tất cả các bản ghi của mình &ndash;&gt;-->
     <record id="rule_employee_read_own" model="ir.rule">
         <field name="name">Nhân viên - Đọc bản ghi của chính mình</field>
         <field name="model_id" ref="model_hr_performance_review"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="domain_force">[(1, '=', 1)]</field>
         <field name="groups" eval="[(4, ref('hr_performance.group_hr_review_employee'))]"/>
         <field name="perm_read" eval="1"/>
         <field name="perm_write" eval="0"/>
@@ -46,4 +47,5 @@
         <field name="perm_create" eval="1"/>
         <field name="perm_unlink" eval="1"/>
     </record>
+    </data>
 </odoo>
