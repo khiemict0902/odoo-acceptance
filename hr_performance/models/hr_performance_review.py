@@ -34,10 +34,16 @@ class HrPerformanceReview(models.Model):
             if record.review_date and record.review_date < fields.Date.today():
                 raise ValidationError('Ngày đánh giá không được trước ngày hôm nay')
 
+            if record.review_date and record.review_date < record.create_date.date():
+                raise ValidationError('Ngày đánh giá không được trước ngày tạo bản ghi')
+
 
     def write(self, vals):
         for record in self:
             if record.state != 'draft':
+                if self.env.context.get('install_mode'):
+                    return super().write(vals)
+                
                 if not self.env.user.has_group('hr_performance.group_hr_review_manager'):
                     raise UserError("Chỉ bản ghi ở trạng thái 'Draft' nhân viên mới được chỉnh sửa.")
         return super().write(vals)

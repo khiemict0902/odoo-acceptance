@@ -1,5 +1,5 @@
 <odoo>
-        <data noupdate="1">
+<!--        <data noupdate="0">-->
     <!-- Sample Employees -->
     <record id="hr_employee_khiem" model="hr.employee">
         <field name="name">Pham Duc Khiem</field>
@@ -12,7 +12,7 @@
     </record>
 
     <record id="review_khiem_draft" model="hr.performance.review">
-        <field name="name">Review Khiem - Draft</field>
+        <field name="name">Review Khiem - Draft2</field>
         <field name="review_date">2025-05-10</field>
         <field name="performance_score">3</field>
         <field name="comment">On track with performance goals.</field>
@@ -31,6 +31,16 @@
         <field name="reviewer_id" ref="base.user_admin"/>
     </record>
 
+    <record id="review_khiem_submitted2" model="hr.performance.review">
+        <field name="name">Review Khiem - Submitted2</field>
+        <field name="review_date">2025-05-15</field>
+        <field name="performance_score">4</field>
+        <field name="comment">Exceeds expectations in backend development.</field>
+        <field name="state">submitted</field>
+        <field name="employee_id" ref="hr_employee_khiem"/>
+        <field name="reviewer_id" ref="base.user_admin"/>
+    </record>
+
     <record id="review_linh_approved" model="hr.performance.review">
         <field name="name">Review Linh - Approved</field>
         <field name="review_date">2025-05-20</field>
@@ -40,5 +50,5 @@
         <field name="employee_id" ref="hr_employee_linh"/>
         <field name="reviewer_id" ref="base.user_admin"/>
     </record>
-        </data>
+<!--        </data>-->
 </odoo>
