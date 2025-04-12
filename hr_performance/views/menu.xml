@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <menuitem id="HRPR_menu_root" name="HR Performance Review">
-            <menuitem id="HRPR_first_level_menu" name="HR Performance">
+        <menuitem id="HRPR_menu_root" name="Đánh giá hiệu suất của nhân viên">
+            <menuitem id="HRPR_first_level_menu" name="Đánh giá hiệu suất">
                 <menuitem id="HRPR_menu_action" action="hr_performance_review_action"/>
             </menuitem>
 

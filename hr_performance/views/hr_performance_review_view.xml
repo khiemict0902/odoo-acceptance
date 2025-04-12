@@ -3,7 +3,7 @@
     <data>
 
         <record id="hr_performance_review_action" model="ir.actions.act_window">
-            <field name="name">Tree</field>
+            <field name="name">Danh sách đấnh giá</field>
             <field name="res_model">hr.performance.review</field>
             <field name="view_mode">tree,form</field>
         </record>
@@ -43,8 +43,10 @@
         <field name="arch" type="xml">
             <form string="Channel">
                 <header>
-                        <button name="submit_action" type="object" string="Submit" states="draft"/>
-                        <button name="approve_action" type="object" string="approve" states="submitted"/>
+                        <button name="submit_action" type="object" string="Nộp" states="draft"/>
+                        <button name="submit_action" type="object" string="Trở về" states="approved"/>
+                        <button name="draft_action" type="object" string="Trở về" states="submitted"/>
+                        <button name="approve_action" type="object" string="Chấp nhận" states="submitted"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved"/>
                     </header>
                 <sheet>

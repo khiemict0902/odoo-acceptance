@@ -5,8 +5,10 @@
     </record>
 
 
+
     <record id="group_hr_experience_manager" model="res.groups">
         <field name="name">Employee Experience Manager</field>
         <field name="category_id" ref="hr_exp.module_category_hr_exp"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]"/>
     </record>
 </odoo>

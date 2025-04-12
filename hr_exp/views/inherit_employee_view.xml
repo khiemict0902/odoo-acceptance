@@ -18,7 +18,7 @@
             <field name="priority" eval="2000"/>
             <field name="arch" type="xml">
                 <div position="inside">
-                    <button name="%(hr_exp.launch_the_wizard)d" type="action" class="oe_stat_button" icon="fa-user">
+                    <button name="%(hr_exp.launch_the_wizard)d" type="action" class="oe_stat_button" icon="fa-user" groups="hr_exp.group_hr_experience_manager">
                         Kinh nghiệm
                     </button>
                 </div>

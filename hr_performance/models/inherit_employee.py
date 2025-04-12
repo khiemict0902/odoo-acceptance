@@ -10,18 +10,13 @@ class InheritedEmployee(models.Model):
     @api.depends('review_ids')
     def _compute_score(self):
         for record in self:
-            list_state = record.review_ids.mapped('state')
-            list_score = record.review_ids.mapped('performance_score')
-            list_score = [int(i) for i in list_score]
-            check = [(x,y) for x,y in zip(list_state, list_score)]
-            score = 0
-            count = 0
-            for i in check:
-                if i[0] == 'approved':
-                    score += i[1]
-                    count += 1
-            score =round(score/count) if count else 0
-            # print(round(score/count))
+            list_review = record.review_ids.filtered(lambda r: r.state == 'approved')
+            scores = [int(r.performance_score) for r in list_review if r.performance_score]
 
-            score_value = dict(record.review_ids[-1]._fields['performance_score'].selection).get(str(score)) if score else 0
+            if scores:
+                average = round(sum(scores) / len(scores))
+                score_value = dict(record.review_ids[0]._fields['performance_score'].selection).get(str(average))
+            else:
+                score_value = 0
+
             record.average_score = score_value
