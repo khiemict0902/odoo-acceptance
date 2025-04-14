@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_ds_action" model="ir.actions.act_window">
+            <field name="name">hr.applicant.ds.action</field>
+            <field name="res_model">hr.applicant</field>
+            <field name="domain">[('detailed_status_id','=', active_id)]</field>
+            <field name="view_mode">tree,form</field>
+     </record>
+
+        <record id="view_applicator_form" model="ir.ui.view">
+            <field name="name">hr.applicant.form</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="priority" eval="2000"/>
+            <field name="arch" type="xml">
+                <header position="inside">
+                    <button name="accept_action" type="object" string="Tiếp nhận"/>
+                </header>
+
+                <xpath expr="//field[@name='priority']" position="after">
+                    <field name="detailed_status_id" options="{'no_create_edit':true,
+                                                            'no_quick_create':true}"/>
+                </xpath>
+
+                <notebook position="inside">
+                    <page string="Thông tin học vấn">
+                        <group>
+                            <field name="graduated_school"/>
+                            <field name="gpa_4_scale" />
+                            <field name="gpa_10_scale" />
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</odoo>
