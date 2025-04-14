@@ -13,6 +13,18 @@
 
     <record id="review_khiem_draft" model="hr.performance.review">
         <field name="name">Review Khiem - Draft2</field>
+        <field name="review_date">2024-07-10</field>
+        <field name="create_date">2024-04-10 04:52:00</field>
+        <field name="performance_score">3</field>
+        <field name="comment">On track with performance goals.</field>
+        <field name="state">draft</field>
+        <field name="employee_id" ref="hr_employee_khiem"/>
+        <field name="reviewer_id" ref="base.user_admin"/>
+    </record>
+
+
+    <record id="review_khiem_draft22" model="hr.performance.review">
+        <field name="name">Review Khiem - Draft22</field>
         <field name="review_date">2025-05-10</field>
         <field name="performance_score">3</field>
         <field name="comment">On track with performance goals.</field>
