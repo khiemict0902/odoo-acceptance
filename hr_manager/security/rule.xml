@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+
+        <!-- Rule cho nhóm Employee Experience Manager -->
+        <record id="employee_experience_manager_rule" model="ir.rule">
+            <field name="name">Nhân viên này phải có 'Chứng chỉ nghề' mới được edit</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="groups" eval="[(4, ref('hr_manager.group_experience_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="domain_force">
+                [('certification_ids.name', 'ilike', 'Chứng chỉ nghề')]
+            </field>
+        </record>
+
+        <record id="employee_hr_manager_rule" model="ir.rule">
+            <field name="name">Employee HR Manager Rule</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="groups" eval="[(4, ref('hr.group_hr_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="domain_force">
+                [(1, '=', 1)]
+            </field>
+        </record>
+
+        <record id="employee_base_user_rule" model="ir.rule">
+            <field name="name">Employee Base User Rule</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="domain_force">
+                [(1, '=', 1)]
+            </field>
+        </record>
+
+    </data>
+</odoo>
