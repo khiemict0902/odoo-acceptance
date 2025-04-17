@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <record id="view_employee_tree" model="ir.ui.view">
+        <field name="name">hr.employee.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+<!--            <tree position="inside">-->
+                <header position="inside">
+                    <button name="%(skill_cert_wizard)d" type="action" string="Thêm kỹ năng, chứng chỉ" class="oe_highlight"/>
+                </header>
+<!--            </tree>-->
+
+        </field>
+    </record>
+
+        <record id="view_employee_form" model="ir.ui.view">
+        <field name="name">hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <div position="inside">
+                <button name="%(hr_manager.certification_to_skill_wizard_action)d" type="action" class="oe_stat_button" icon="fa-user" groups="hr.group_hr_user">
+                    Cert-Skill
+                </button>
+            </div>
+            <group position="after">
+                <group>
+                    <field name="years_of_experience"/>
+                </group>
+            </group>
+            <notebook position="inside">
+                <page string="Chứng chỉ">
+                    <field name="certification_ids">
+                        <tree>
+                            <field name="name"/>
+                            <field name="date_obtained"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Kỹ năng" attrs="{'invisible': [('skill_ids', '=', [])]}">
+                    <field name="skill_ids">
+                        <tree editable="bottom" >
+                            <field name="name"/>
+                            <field name="eval"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    </data>
+
+</odoo>

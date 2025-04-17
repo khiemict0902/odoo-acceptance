@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_certification_to_skill_wizard_form" model="ir.ui.view">
+            <field name="name">Chuyển thành Kỹ năng</field>
+            <field name="model">certification.to.skill.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Chọn Chứng Chỉ">
+                    <group>
+                        <field name="employee_id" />
+                        <field name="certification_ids" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="action_convert_cert_to_skills" type="object" string="Chuyển thành Kỹ năng" class="btn-primary"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="certification_to_skill_wizard_action" model="ir.actions.act_window">
+            <field name="name">Chuyển thành Kỹ năng</field>
+            <field name="res_model">certification.to.skill.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="skill_cert_wizard" model="ir.actions.act_window">
+            <field name="name">Thêm chứng chỉ và kỹ năng</field>
+            <field name="res_model">update.skill.cert</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        </record>
+
+        <record id="skill_cert_wizard_form" model="ir.ui.view">
+        <field name="name">Thêm chứng chỉ và kỹ năng</field>
+        <field name="model">update.skill.cert</field>
+        <field name="arch" type="xml">
+            <form string="Update Skill Cert">
+                <div>
+                    <h3>
+                        Chọn nhóm
+                    </h3>
+                </div>
+                <group>
+                    <group>
+                        <field name="check_department"/>
+                    </group>
+                    <group>
+                        <field name="department_id" attrs="{'invisible': [('check_department','=',False)]}"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="check_job"/>
+                    </group>
+                    <group>
+                        <field name="job_id" attrs="{'invisible': [('check_job','=',False)]}"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="check_experience"/>
+                    </group>
+                    <group>
+                        <field name="min_experience" attrs="{'invisible': [('check_experience','=',False)]}"/>
+                    </group>
+                </group>
+                <div groups="hr_manager.group_manage_skill">
+                    <h3>
+                        Chọn kỹ năng
+                    </h3>
+                </div>
+                <group>
+                    <field name="add_skill"/>
+                    <field name="skill_name" attrs="{'invisible': [('add_skill','=',False)]}"/>
+                    <field name="eval" attrs="{'invisible': [('add_skill','=',False)]}"/>
+                </group>
+                <div groups="hr_manager.group_manage_certification">
+                    <h3>
+                        Chọn chứng chỉ
+                    </h3>
+                </div>
+                <group>
+                    <field name="add_certification"/>
+                    <field name="cert_name" attrs="{'invisible': [('add_certification','=',False)]}"/>
+                    <field name="cert_date_obtained" attrs="{'invisible': [('add_certification','=',False)]}"/>
+                </group>
+                <footer>
+                    <button string="Ok" name="update_skill_cert_action" type="object" default_focus="1" class="btn-primary"/>
+                    <button string="Đóng" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    </data>
+</odoo>
