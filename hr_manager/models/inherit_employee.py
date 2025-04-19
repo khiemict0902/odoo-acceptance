@@ -8,18 +8,16 @@ class InheritEmployee(models.Model):
     certification_ids = fields.One2many('employee.certifications', 'employee_id', string='Chứng chỉ')
     skill_ids = fields.One2many('employee.skills', 'employee_id', string='Kỹ năng')
 
-    @api.depends('certification_ids', 'skill_ids')
+    @api.depends('certification_ids')
     def _compute_years_of_experience(self):
         for record in self:
-            year = []
-            for certification in record.certification_ids:
-                if certification.date_obtained:
-                    year.append(certification.date_obtained.year)
-            yoe = min(year) if year else 0
-            if year:
-                record.years_of_experience = fields.Date.today().year - yoe
+            years = record.certification_ids.mapped('date_obtained')
+            years = [d.year for d in years if d]
+            if years:
+                record.years_of_experience = fields.Date.today().year - min(years)
+
             else:
                 record.years_of_experience = 0
 
 
-            print(year)
+            print(years)

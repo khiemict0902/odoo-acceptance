@@ -15,35 +15,6 @@
         <field name="model">update.skill.cert</field>
         <field name="arch" type="xml">
             <form string="Update Skill Cert">
-                <div>
-                    <h3>
-                        Chọn nhóm
-                    </h3>
-                </div>
-                <group>
-                    <group>
-                        <field name="check_department"/>
-                    </group>
-                    <group>
-                        <field name="department_id" attrs="{'invisible': [('check_department','=',False)]}"/>
-                    </group>
-                </group>
-                <group>
-                    <group>
-                        <field name="check_job"/>
-                    </group>
-                    <group>
-                        <field name="job_id" attrs="{'invisible': [('check_job','=',False)]}"/>
-                    </group>
-                </group>
-                <group>
-                    <group>
-                        <field name="check_experience"/>
-                    </group>
-                    <group>
-                        <field name="min_experience" attrs="{'invisible': [('check_experience','=',False)]}"/>
-                    </group>
-                </group>
                 <div groups="hr_manager.group_manage_skill">
                     <h3>
                         Chọn kỹ năng

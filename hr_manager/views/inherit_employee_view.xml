@@ -22,7 +22,7 @@
         <field name="arch" type="xml">
             <div position="inside">
                 <button name="%(hr_manager.certification_to_skill_wizard_action)d" type="action" class="oe_stat_button" icon="fa-user" groups="hr.group_hr_user">
-                    Cert-Skill
+                    Chứng chỉ sang kỹ năng
                 </button>
             </div>
             <group position="after">
