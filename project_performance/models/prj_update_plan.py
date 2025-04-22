@@ -1,22 +1,23 @@
 from email.policy import default
 
 from odoo import api, fields, models
-from odoo.addons.test_convert.tests.test_env import record
+from odoo.exceptions import UserError
 
 
 class UpdatePlan(models.Model):
     _name = 'prj.update.plan'
     _description = 'Bản kế hoạch cập nhật sự án'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _sql_constraints = [('plan_unique_name','UNIQUE(name)','Tên bản ghi đã tồn tại')]
 
-    name = fields.Char('Tên', required=True)
+    name = fields.Char('Tên', required=True, tracking=True)
     description = fields.Html('Mô tả')
     state = fields.Selection([('draft', 'Draft'),
                               ('pending', 'Pending'),
                               ('approved', 'Approved'),
                               ('done', 'Done'),
                               ('closed', 'Closed')],
-                             string='Trạng thái', default='draft')
+                             string='Trạng thái', default='draft', tracking=True)
     date_create = fields.Date(string='Ngày tạo', default=fields.Date.today)
 
     project_id = fields.Many2one('project.project', string='Dự án')
@@ -31,7 +32,7 @@ class UpdatePlan(models.Model):
     @api.depends('task_ids')
     def _compute_pr_ids(self):
         for record in self:
-            record.pr_ids = record.task_ids.mapped('pr_id')
+            record.pr_ids = record.task_ids.mapped('pr_ids')
 
     @api.depends('task_ids')
     def _compute_count_task(self):
@@ -53,6 +54,9 @@ class UpdatePlan(models.Model):
 
     def done_action(self):
         for record in self:
+            state_list = record.pr_ids.mapped('state')
+            if not all(p=='uat' for p in state_list):
+                raise UserError('Tất cả trạng thái của Pull Request là UAT mới có thể hoàn thành')
             record.state = 'done'
             record.task_ids.write({'is_update': True})
             record.pr_ids.write({'state': 'staging'})
@@ -64,11 +68,36 @@ class UpdatePlan(models.Model):
 
     def pending_action(self):
         for record in self:
+            if not record.task_ids:
+                raise UserError('Phải có nhiệm vụ để chờ duyệt')
             record.state = 'pending'
+
 
     def approve_action(self):
         for record in self:
+            if not record.pr_ids:
+                raise UserError('Phải có pull request để duyệt')
             record.state = 'approved'
+
+    def action_rollback2done(self):
+        for record in self:
+            record.state = 'done'
+            record.pr_ids.write({'state': 'staging'})
+
+    def action_rollback2approved(self):
+        for record in self:
+            record.state = 'approved'
+            record.task_ids.write({'is_update': False})
+            record.pr_ids.write({'state': 'uat'})
+
+
+    def action_rollback2pending(self):
+        for record in self:
+            record.state = 'pending'
+
+    def action_rollback2draft(self):
+        for record in self:
+            record.state = 'draft'
 
     def action_view_tasks(self):
         self.ensure_one()

@@ -7,9 +7,7 @@
 
             <notebook position="inside">
                 <page string="Pull Request">
-                    <group>
-                        <field name="pr_id"/>
-                    </group>
+                    <field name="pr_ids"/>
                 </page>
             </notebook>
 
