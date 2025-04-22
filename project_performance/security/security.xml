@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="module_category_project_per" model="ir.module.category">
+            <field name="name">Quy trình update hệ thống</field>
+            <field name="sequence">20</field>
+        </record>
+    </data>
+    <record id="group_project_user" model="res.groups">
+        <field name="name">Quản lý dự án</field>
+        <field name="category_id" ref="module_category_project_per"/>
+    </record>
+
+
+</odoo>
