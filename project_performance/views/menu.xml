@@ -1,0 +1,9 @@
+<odoo>
+    <menuitem id="menu_project_manager" name="Quy trinh" parent="project.menu_main_pm"
+            sequence="100"/>
+
+    <menuitem id="menu_pull_request" name="Pull Request" parent="menu_project_manager" action="prj_pull_request_action"/>
+
+    <menuitem id="menu_update_plan" name="Kế hoạch update" parent="menu_project_manager" action="prj_update_plan_action"/>
+
+</odoo>

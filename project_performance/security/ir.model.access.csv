@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_prj_pull_request,prj_pull_request,model_prj_pull_request,project_performance.group_project_user,1,1,1,1
+access_prj_update_plan,access_prj_update_plan,model_prj_update_plan,project_performance.group_project_user,1,1,1,1
