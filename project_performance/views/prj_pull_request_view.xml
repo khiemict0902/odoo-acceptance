@@ -27,7 +27,7 @@
     <record id="task_pr_action" model="ir.actions.act_window">
             <field name="name">Nhiệm vụ</field>
             <field name="res_model">project.task</field>
-            <field name="domain">[('pr_id','=', active_id)]</field>
+            <field name="domain">[('pr_ids','=', active_id)]</field>
             <field name="view_mode">tree,form</field>
      </record>
 
@@ -37,6 +37,10 @@
         <field name="arch" type="xml">
             <form string="prj_pull_request_form">
                 <header>
+                        <button name="action_rollback2uat" type="object" string="Quay lại" states="staging"/>
+                        <button name="action_rollback2staging" type="object" string="Quay lại" states="product"/>
+                        <button name="action_rollback2samdev" type="object" string="Quay lại" states="uat"/>
+                        <button name="action_uat" type="object" string="Sang UAT" states="samdev"/>
                         <field name="state" widget="statusbar" statusbar_visible="samdev,uat,staging,product" options="{'clickable':1}"/>
                 </header>
                 <sheet>
@@ -57,11 +61,16 @@
                         </group>
                         <group>
                             <field name="tags_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="task_id"/>
                             <field name="person_create_id"/>
                             <field name="date_create"/>
                         </group>
                     </group>
                 </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
             </form>
         </field>
     </record>

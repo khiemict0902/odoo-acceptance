@@ -28,6 +28,10 @@
         <field name="arch" type="xml">
             <form string="prj_upadate_plan_form">
                 <header>
+                        <button name="action_rollback2draft" type="object" string="Quay lại" states="pending"/>
+                        <button name="action_rollback2pending" type="object" string="Quay lại" states="approved"/>
+                        <button name="action_rollback2approved" type="object" string="Quay lại" states="done"/>
+                        <button name="action_rollback2done" type="object" string="Quay lại" states="closed"/>
                         <button name="pending_action" type="object" string="Chờ Duyệt" states="draft"/>
                         <button name="approve_action" type="object" string="Duyệt" states="pending"/>
                         <button name="done_action" type="object" string="Hoàn Thành" states="approved"/>
@@ -63,9 +67,10 @@
                             <field name="description"/>
                         </group>
                         <group>
-                            <field name="project_id"/>
+                            <field name="project_id" attrs="{'readonly': [('state','in',['approved','done','closed'])]}"/>
                             <field name="task_domain" invisible="1"/>
-                            <field name="task_ids" widget="many2many_tags" domain="task_domain"/>
+                            <field name="task_ids" widget="many2many_tags" domain="task_domain"
+                                     attrs="{'readonly': [('state','in',['approved','done','closed'])]}"/>
                             <field name="date_create"/>
                         </group>
                     </group>
@@ -75,6 +80,10 @@
                         </page>
                     </notebook>
                 </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
             </form>
         </field>
     </record>
