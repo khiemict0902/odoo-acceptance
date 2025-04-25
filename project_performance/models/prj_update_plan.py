@@ -18,12 +18,9 @@ class UpdatePlan(models.Model):
                               ('done', 'Done'),
                               ('closed', 'Closed')],
                              string='Trạng thái', default='draft', tracking=True)
-    date_create = fields.Date(string='Ngày tạo', default=fields.Date.today)
-
-    project_id = fields.Many2one('project.project', string='Dự án')
-    task_ids =fields.Many2many('project.task', string='Nhiệm vụ')
+    project_ids = fields.Many2many('project.project', string='Dự án', tracking=True)
+    task_ids =fields.Many2many('project.task', string='Nhiệm vụ', tracking=True)
     task_domain = fields.Json('Domain', compute='_compute_task_domain')
-
     pr_ids = fields.Many2many('prj.pull.request', string='Pull Requests', compute='_compute_pr_ids', stored=True)
 
     count_task = fields.Integer(compute='_compute_count_task')
@@ -44,13 +41,17 @@ class UpdatePlan(models.Model):
         for record in self:
             record.count_pr = len(record.mapped('pr_ids'))
 
-    @api.depends('project_id')
+    @api.depends('project_ids')
     def _compute_task_domain(self):
         for record in self:
-            if record.project_id:
-                record.task_domain = [('project_id', '=', record.project_id.id),('is_update', '=', False)]
+            if record.project_ids:
+                record.task_domain = [
+                    ('project_id', 'in', record.project_ids.ids),
+                    ('is_update', '=', False)
+                ]
             else:
                 record.task_domain = [('is_update', '=', False)]
+
 
     def done_action(self):
         for record in self:
@@ -59,11 +60,13 @@ class UpdatePlan(models.Model):
                 raise UserError('Tất cả trạng thái của Pull Request là UAT mới có thể hoàn thành')
             record.state = 'done'
             record.task_ids.write({'is_update': True})
+            record.pr_ids.write({'prev_state': 'uat'})
             record.pr_ids.write({'state': 'staging'})
 
     def close_action(self):
         for record in self:
             record.state = 'closed'
+            record.task_ids.write({'is_close': True})
             record.pr_ids.write({'state': 'product'})
 
     def pending_action(self):
@@ -82,6 +85,7 @@ class UpdatePlan(models.Model):
     def action_rollback2done(self):
         for record in self:
             record.state = 'done'
+            record.task_ids.write({'is_close': False})
             record.pr_ids.write({'state': 'staging'})
 
     def action_rollback2approved(self):
