@@ -5,9 +5,30 @@
         <field name="inherit_id" ref="project.view_task_form2"/>
         <field name="arch" type="xml">
 
+            <header position="inside">
+                <button name="action_rollback_code"
+                        type="object"
+                        string="Rollback Code"
+                        class="btn-primary"
+                        attrs="{'invisible': ['|', ('is_close', '=', True), ('is_update', '=', False)]}" />
+
+            </header>
+
             <notebook position="inside">
                 <page string="Pull Request">
-                    <field name="pr_ids"/>
+                    <field name="is_close" readonly="1" invisible="1"/>
+                    <field name="is_update" readonly="1" invisible="1"/>
+                    <field name="pr_ids">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="link_pr"/>
+                            <field name="id_pr"/>
+                            <field name="tags_ids"/>
+                            <field name="person_create_id"/>
+                            <field name="state"/>
+                            <button name="open_pull_request_form" type="object" string="Mở Form" icon="fa-external-link" context="{'default_task_id': active_id}" />
+                        </tree>
+                    </field>
                 </page>
             </notebook>
 

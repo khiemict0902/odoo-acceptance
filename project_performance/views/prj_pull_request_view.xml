@@ -19,7 +19,7 @@
                 <field name="id_pr"/>
                 <field name="state"/>
                 <field name="person_create_id"/>
-                <field name="date_create"/>
+                <field name="create_date" string="Ngày tạo"/>
             </tree>
         </field>
     </record>
@@ -37,9 +37,9 @@
         <field name="arch" type="xml">
             <form string="prj_pull_request_form">
                 <header>
-                        <button name="action_rollback2uat" type="object" string="Quay lại" states="staging"/>
-                        <button name="action_rollback2staging" type="object" string="Quay lại" states="product"/>
-                        <button name="action_rollback2samdev" type="object" string="Quay lại" states="uat"/>
+                        <button name="action_rollback2uat" type="object" string="UAT" states="staging"/>
+                        <button name="action_rollback2staging" type="object" string="Staging" states="product"/>
+                        <button name="action_rollback2samdev" type="object" string="Samdev" states="uat"/>
                         <button name="action_uat" type="object" string="Sang UAT" states="samdev"/>
                         <field name="state" widget="statusbar" statusbar_visible="samdev,uat,staging,product" options="{'clickable':1}"/>
                 </header>
@@ -54,16 +54,18 @@
                     </div>
                     <group>
                         <group>
-                            <field name="name"/>
-                            <field name="description"/>
-                            <field name="link_pr"/>
+                            <field name="name" attrs="{'readonly': [('state','in',['uat','staging','product'])]}"/>
+                            <field name="description" attrs="{'readonly': [('state','in',['uat','staging','product'])]}"/>
+                            <field name="link_pr" attrs="{'readonly': [('state','in',['uat','staging','product'])]}"/>
                             <field name="id_pr"/>
                         </group>
                         <group>
-                            <field name="tags_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                            <field name="task_id"/>
-                            <field name="person_create_id"/>
-                            <field name="date_create"/>
+                            <field name="tags_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color'}"
+                                   attrs="{'readonly': [('state','in',['uat','staging','product'])]}"/>
+                            <field name="task_id" attrs="{'readonly': [('state','in',['uat','staging','product'])]}"/>
+                            <field name="person_create_id" attrs="{'readonly': [('state','in',['uat','staging','product'])]}"/>
+                            <field name="create_date" string="Ngày tạo"/>
                         </group>
                     </group>
                 </sheet>
