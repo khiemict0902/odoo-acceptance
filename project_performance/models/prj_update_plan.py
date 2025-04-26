@@ -111,7 +111,7 @@ class UpdatePlan(models.Model):
             'view_mode': 'tree,form',
             'res_model': 'project.task',
             'domain': [('id', 'in', self.task_ids.ids)],
-            'context': {'default_project_id': self.project_id.id},
+            'context': {'default_project_id': self.project_ids.ids},
         }
 
     def action_view_pull_requests(self):
