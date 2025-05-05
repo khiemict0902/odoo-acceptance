@@ -17,6 +17,7 @@
                 <field name="description"/>
                 <field name="link_pr"/>
                 <field name="id_pr"/>
+                <field name="task_id"/>
                 <field name="state"/>
                 <field name="person_create_id"/>
                 <field name="create_date" string="Ngày tạo"/>
@@ -45,8 +46,8 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                            <button name="%(task_pr_action)d"
-                                    type="action"
+                            <button name="action_open_task"
+                                    type="object"
                                     class="oe_stat_button"
                                     icon="fa-archive">
                                 Nhiệm vụ
