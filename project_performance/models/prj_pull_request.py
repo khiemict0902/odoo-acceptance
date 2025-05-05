@@ -1,5 +1,5 @@
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class PullRequest(models.Model):
@@ -36,7 +36,11 @@ class PullRequest(models.Model):
     def _compute_id_pr(self):
         for pull in self:
             if pull.link_pr and "pull/" in pull.link_pr:
-                pull.id_pr = pull.link_pr.split('/')[-1]
+                id_pullrequest = pull.link_pr.split('/')[-1]
+                try:
+                    pull.id_pr = int(id_pullrequest)
+                except:
+                    raise ValidationError('Pull Request Link không hợp lệ, id cuối phải là số')
             else:
                 pull.id_pr = False
 
