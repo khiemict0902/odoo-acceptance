@@ -6,12 +6,12 @@ class PullRequest(models.Model):
     _name = 'prj.pull.request'
     _description = 'Pull Request của dự án'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = 'id'
+    _order = 'id desc'
     _sql_constraints = [('pr_unique_name','UNIQUE(name)','Tên bản ghi đã tồn tại'),
                         ('pr_unique_linkpr','UNIQUE(link_pr)','Link Pull request đã tồn tại')]
 
 
-    name = fields.Char('Tên', required=True, tracking=True)
+    name = fields.Char('Tên', tracking=True)
     description = fields.Text('Mô tả', tracking=True)
     tags_ids = fields.Many2many('project.tags', string='Thẻ tags', tracking=True)
     link_pr = fields.Char('Link pull request', help="Link phải có dạng 'https://_/pull/_id'", tracking=True)
@@ -30,7 +30,7 @@ class PullRequest(models.Model):
     ], string='Trạng thái trước đó')
 
     person_create_id = fields.Many2one('res.users', string='Người tạo', default=lambda self: self.env.user, tracking=True)
-    task_id = fields.Many2one('project.task', 'Nhiệm vụ', tracking=True)
+    task_id = fields.Many2one('project.task', 'Nhiệm vụ', required=True, tracking=True)
 
     @api.depends('link_pr')
     def _compute_id_pr(self):
@@ -68,3 +68,35 @@ class PullRequest(models.Model):
             'res_id': self.id,
             'target': 'current',
         }
+
+    def action_open_task(self):
+        self.ensure_one()
+        if not self.task_id:
+            raise UserError("Không có nhiệm vụ nào được liên kết với pull request này.")
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Nhiệm vụ',
+            'res_model': 'project.task',
+            'res_id': self.task_id.id,
+            'view_mode': 'form',
+            'target': 'current',
+        }
+
+    @api.model
+    def create(self, vals):
+        if not vals.get('name') and vals.get('task_id'):
+            task = self.env['project.task'].browse(vals['task_id'])
+
+            record = super().create(vals)
+            record.name = f"PR #{record.id} - {task.name}"
+            return record
+        return super().create(vals)
+
+    def write(self, vals):
+        res = super().write(vals)
+        for record in self:
+            if not record.name and record.task_id:
+                record.name = f"PR #{record.id} - {record.task_id.name}"
+        return res
+
