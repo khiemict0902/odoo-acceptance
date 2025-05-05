@@ -6,7 +6,7 @@ class PullRequest(models.Model):
     _name = 'prj.pull.request'
     _description = 'Pull Request của dự án'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = 'id desc'
+    _order = 'id_pr desc'
     _sql_constraints = [('pr_unique_name','UNIQUE(name)','Tên bản ghi đã tồn tại'),
                         ('pr_unique_linkpr','UNIQUE(link_pr)','Link Pull request đã tồn tại')]
 
