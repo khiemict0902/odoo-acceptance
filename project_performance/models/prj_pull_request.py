@@ -15,7 +15,7 @@ class PullRequest(models.Model):
     description = fields.Text('Mô tả', tracking=True)
     tags_ids = fields.Many2many('project.tags', string='Thẻ tags', tracking=True)
     link_pr = fields.Char('Link pull request', help="Link phải có dạng 'https://_/pull/_id'", tracking=True)
-    id_pr = fields.Char('ID Pull Request', compute='_compute_id_pr', store=True)
+    id_pr = fields.Integer('ID Pull Request', compute='_compute_id_pr', store=True)
     state = fields.Selection([('samdev', 'Samdev'),
                               ('uat', 'UAT'),
                               ('staging', 'Staging'),
