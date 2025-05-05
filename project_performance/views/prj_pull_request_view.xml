@@ -58,7 +58,7 @@
                             <field name="name" attrs="{'readonly': [('state','in',['uat','staging','product'])]}"/>
                             <field name="description" attrs="{'readonly': [('state','in',['uat','staging','product'])]}"/>
                             <field name="link_pr" attrs="{'readonly': [('state','in',['uat','staging','product'])]}"/>
-                            <field name="id_pr" widget="char"/>
+                            <field name="id_pr"/>
                         </group>
                         <group>
                             <field name="tags_ids" widget="many2many_tags"

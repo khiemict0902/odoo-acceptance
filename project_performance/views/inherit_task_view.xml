@@ -22,7 +22,7 @@
                         <tree editable="bottom">
                             <field name="name"/>
                             <field name="link_pr"/>
-                            <field name="id_pr" widget="char"/>
+                            <field name="id_pr"/>
                             <field name="task_id"/>
                             <field name="tags_ids"/>
                             <field name="person_create_id"/>
